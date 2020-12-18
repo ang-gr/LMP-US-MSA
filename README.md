@@ -37,3 +37,13 @@ We use county groups to match 1980 MSAs and state & county FIPS codes to match 1
 For Jul. 2015 [definition](https://www.census.gov/geographies/reference-files/time-series/demo/metro-micro/delineation-files.html) and [population](https://www.census.gov/data/tables/time-series/demo/popest/2010s-total-metro-and-micro-statistical-areas.html) data, we collect the data from the website of US Census Bureau. 
 The cleaned MSA crosswalk files are included in "dta\msa_list_2015" and MSA names for plotting "dta\cityname".
 
+## Sections
+### 1. Private Occ
+The directory includes the codes for producing **the Percentage Point Changes of High and Middle-paid in MSAs**, 1990-2015 and 1980-2015, for (1) workers for wages or salary in private sectors "private"; (2) broader workers in non-public sectors "nonpubic". Specially, in do files:
+* "msa[year].do" is for cleaning the original census data and merging occ definitions to calculate employment shares for each MSA and each year. **Note**: the outputs are saved in "...\dta\shempl\shempl_[year]".
+* "2merge_all.do" is the second step to merge 1980-2015 year data together to form a panel and add the run variable MSA population in 2015. **Note**: the outputs are saved in "...\dta\workfile9015_(USborn)_..."
+* "3plot_change.do" is the third step to calculate the changes for L, M, H jobs and plot. **Note**: the figures are saved in "...\dta\fig" and "...\dta\gph".
+* "4ttest.do" is the forth step to obtain the t-statistics to test the changes.
+
+
+
