@@ -45,5 +45,12 @@ The directory includes the codes for producing **the Percentage Point Changes of
 * "3plot_change.do" is the third step to calculate the changes for L, M, H jobs and plot. **Note**: the figures are saved in "...\dta\fig" and "...\dta\gph".
 * "4ttest.do" is the forth step to obtain the t-statistics to test the changes.
 
+### 2. Private&Public Occ
+This section is distinct from **1. Private Occ** regarding the treatment of raw census dataset (whether include all occupations or just non-public occupations). The directory also includes smoothing kernal plots instead of bin-scattered plots.
 
+### 3. Reproduce Autor
+The directory includes codes (data treatment) and cleaned datasets in order to reproduce Fig 7 in Autor (2019) from raw census datasets.
+
+## Potential Issues
+### 1. The degree of polarization is relatively small using PCS definition.
 
