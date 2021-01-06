@@ -6,10 +6,11 @@ global figdir "$workdir/fig"
 global gphdir "$workdir/gph"
 global data "$workdir/dta"
 
-use "$data/workfile9015_USborn_private"
+*use "$data/workfile9015_USborn_private"
 *use "$data/workfile9015_USborn_nopublic"
 *use "$data/workfile9015_private"
 *use "$data/workfile9015_USborn_private"
+use "$data/workfile9015_NYLA_nopub"
 
 merge m:1 cbsa using "$data/cityname", keep(matched) nogenerate
 
@@ -34,6 +35,7 @@ save "$data/change/change_9015_US_private", replace
 *save "$data/change/change_9015_US_nopublic", replace
 *save "$data/change/change_9015_nopublic", replace
 *save "$data/change/change_9015_private", replace
+*save "$data/change/change_9015_nyla_nopublic", replace
 
 use "$data/change/change_9015_nopublic", clear
 
@@ -69,7 +71,6 @@ legend(rows(1) size(small) position(0) bplacement(neast) order(1 "0.1m-0.5m" 2 "
 xlabel(-0.15(0.05)0) ylabel(0(0.05)0.15) title("Percentage point change of high and middle-paid in MSAs, 1990-2015", size(medsmall) color(black)) ///
 note("Note: exclude workers for wage/salary in government; Job categories defined by PCS", size(vsmall))
 //note("Note: Only consider workers for wage/salary in private sectors; Job categories defined by PCS")
-
 graph export "$workdir/gph/Figure7_changes_9015_nopub.png",replace
 graph export "$workdir/fig/Figure7_changes_9015_nopub.pdf",replace
 *graph export "$workdir/gph/Figure7_changes_9015_private.png",replace
@@ -98,10 +99,15 @@ graph export "$workdir/fig/Figure7_changes_9015_USborn_nopub.pdf",replace
 */
 
 *Plot Changes for only NY and LA, 1990-2015*
-twoway 	(scatter change_high change_mid if pop2015>20000000, mcolor(midblue) msymbol(Oh) msize(vhuge))  (scatter change_high change_mid if pop2015<15000000, mcolor(midgreen) msymbol(Oh) msize(vhuge)) (function y=-(x), range(-0.12 0.001) lcolor(black)) (function y=-(x/2), range(-0.12 0.001) lcolor(grey) lp(dash)) (function y=0, range(-0.12 0) lcolor(black) ),  xscale(range(-0.12 0) noextend) yscale(range(-0.001 0.12) noextend) xtitle("Percentage point change of middle-paid") ytitle("Percentage point change of high-paid") legend(rows(1) size(small) position(0) bplacement(neast) order(1 "New York City" 2 "Los Angeless City")) xlabel(-0.12(0.03)0) ylabel(0(0.03)0.12) 
-title("Percentage point change of high-paid and middle-paid in NYC and LA City, 1990-2015", size(small) color(black)) 
-graph export "$workdir/gph/Figure7_changes_9015_NYLA.png",replace
-graph export "$workdir/gph/Figure7_changes_9015_NYLA.pdf",replace		
+twoway 	(scatter change_high change_mid if pop2015>20000000, mcolor(midblue) msymbol(Oh) msize(vhuge)) ///
+ (scatter change_high change_mid if pop2015<15000000, mcolor(midgreen) msymbol(Oh) msize(vhuge)) ///
+ (function y=-(x), range(-0.12 0.001) lcolor(black)) (function y=-(x/2), range(-0.12 0.001) lcolor(grey) lp(dash)) ///
+ (function y=0, range(-0.12 0) lcolor(black) ),  xscale(range(-0.12 0) noextend) yscale(range(-0.001 0.12) noextend) ///
+  xtitle("Percentage point change of middle-paid") ytitle("Percentage point change of high-paid") ///
+  legend(rows(1) size(small) position(0) bplacement(neast) order(1 "New York City" 2 "Los Angeless City")) xlabel(-0.12(0.03)0) ylabel(0(0.03)0.12) ///
+  title("Percentage point change of high-paid and middle-paid in NYC and LA City, 1990-2015", size(small) color(black))
+graph save "$workdir/gph/NYLA/Figure7_changes_9015_NYLA_nopub.gph", replace
+graph export "$workdir/fig/NYLA/Figure7_changes_9015_NYLA_nopub.pdf",replace		
 		
 /* References:		
 twoway 	(scatter change_high change_mid if TDUU2015_size>50&TDUU2015_size<71, mcolor(midblue) msize(vsmall)) 
@@ -110,8 +116,7 @@ twoway 	(scatter change_high change_mid if TDUU2015_size>50&TDUU2015_size<71, mc
 		(scatter change_high change_midS if UU2010_c15==33701, mcolor(red) msymbol(S) mlabel(cityname) mlabp(1) mlabcolor(black) msize(small)) 
 		(scatter change_high change_mid if UU2010_c15==759, mcolor(red) msymbol(S) mlabel(cityname) mlabp(4) mlabcolor(black) msize(small)) 
 		(scatter change_high change_mid if UU2010_c15==757|UU2010_c15==758|UU2010_c15==6701, mcolor(red) msymbol(S) mlabel(cityname) mlabp(6) mlabcolor(black) msize(small)) 
-		(scatter change_high change_mid if TDUU2015_size>70&UU2010_c15!=757&UU2010_c15!=38701&UU2010_c15!=758&UU2010_c15!=33701&UU2010_c15!=759&UU2010_c15!=6701, mcolor(red) msymbol(S) mlabel(cityname) mlabcolor(black) msize(small)) 
-		
+		(scatter change_high change_mid if TDUU2015_size>70&UU2010_c15!=757&UU2010_c15!=38701&UU2010_c15!=758&UU2010_c15!=33701&UU2010_c15!=759&UU2010_c15!=6701, mcolor(red) msymbol(S) mlabel(cityname) mlabcolor(black) msize(small)) 		
 		(function y=-(x), range(-20 0) lcolor(black)) 
 		(function y=-(x/2), range(-22 0) lcolor(grey) lp(dash)) 
 		(function y=0, range(-22 0) lcolor(black)), xsc(r(-22 0)) ysc(r(-3 19)) xtitle("Percentage point change of middle-paid") ytitle("Percentage point change of high-paid") legend(rows(1) size(small) position(0) bplacement(neast) order(3 ">=0.5m" 1 "0.1-0.5m" 2 "<0.1m"))
